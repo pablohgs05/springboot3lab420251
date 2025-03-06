@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import br.gov.sp.fatec.springboot3lab420251.entity.Usuario;
+import br.gov.sp.fatec.springboot3lab420251.entity.View;
 import br.gov.sp.fatec.springboot3lab420251.service.UsuarioService;
 
 @RestController
@@ -24,6 +27,7 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
+    @JsonView(View.UsuarioSimplificado.class)
     public List<Usuario> listarTodos() {
         return service.listarTodos();
     }
@@ -34,6 +38,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/{id}")
+    @JsonView(View.UsuarioCompleto.class)
     public ResponseEntity<Usuario> buscarPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }

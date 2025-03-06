@@ -3,6 +3,7 @@ package br.gov.sp.fatec.springboot3lab420251.entity;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,9 +24,11 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id")
+    @JsonView({View.UsuarioSimplificado.class, View.AnotacaoCompleta.class})
     private Long id;
 
     @Column(name = "usr_nome")
+    @JsonView({View.UsuarioSimplificado.class, View.AnotacaoCompleta.class})
     private String nome;
 
     @Column(name = "usr_senha")
@@ -33,13 +36,14 @@ public class Usuario {
     private String senha;
 
     @OneToMany(mappedBy = "usuarioCriacao", fetch = FetchType.LAZY)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonView({View.UsuarioCompleto.class})
     private Set<Anotacao> anotacoes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "uau_usuario_autorizacao",
             joinColumns = { @JoinColumn(name = "usr_id")},
             inverseJoinColumns = { @JoinColumn(name = "aut_id")})
+    @JsonView({View.UsuarioCompleto.class})
     private Set<Autorizacao> autorizacoes;
 
     public Usuario(String nome, String senha) {

@@ -3,6 +3,7 @@ package br.gov.sp.fatec.springboot3lab420251.entity;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,9 +21,11 @@ public class Autorizacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "aut_id")
+    @JsonView({View.UsuarioCompleto.class})
     private Long id;
 
     @Column(name = "aut_nome")
+    @JsonView({View.UsuarioCompleto.class})
     private String nome;
 
     @ManyToMany(mappedBy = "autorizacoes", fetch = FetchType.LAZY)
