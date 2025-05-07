@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ public class UsuarioService {
         return repo.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public Usuario novo(Usuario usuario) {
         if(usuario == null ||
                 usuario.getNome() == null ||
@@ -34,6 +36,7 @@ public class UsuarioService {
         return repo.save(usuario);
     }
 
+    @PreAuthorize("isAuthenticated()")
     public Usuario buscarPorId(Long id) {
         Optional<Usuario> usuarioOp = repo.findById(id);
         if(usuarioOp.isEmpty()) {
