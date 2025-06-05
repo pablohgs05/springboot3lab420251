@@ -138,7 +138,6 @@ insert into con_conteudo (con_texto, con_data_hora_criacao, con_data_hora_public
   values ('Aqui vai uma introdução', '2025-05-10 10:02', '2025-05-10 10:30', 1),
          ('Meu trabalho inteiro é isso!', '2025-06-01 17:02', null, 2);
 
---Comente essa linha se o usuario ja existir
-CREATE USER 'spring'@'localhost' IDENTIFIED BY 'pass123';
+CREATE USER 'spring'@'localhost' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON springbootdb.* TO 'spring'@'localhost';
 FLUSH PRIVILEGES;
