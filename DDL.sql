@@ -1,6 +1,9 @@
+CREATE DATABASE IF NOT EXISTS springbootdb;
+USE springbootdb;
+
 drop table if exists usr_usuario cascade;
 create table usr_usuario (
-  usr_id bigint generated always as identity,
+  usr_id bigint AUTO_INCREMENT,
   usr_nome varchar(20) not null,
   usr_senha varchar(150) not null,
   primary key (usr_id),
@@ -9,7 +12,7 @@ create table usr_usuario (
 
 drop table if exists aut_autorizacao cascade;
 create table aut_autorizacao (
-  aut_id bigint generated always as identity,
+  aut_id bigint AUTO_INCREMENT,
   aut_nome varchar(20) not null,
   primary key (aut_id),
   unique (aut_nome)
@@ -26,7 +29,7 @@ create table uau_usuario_autorizacao (
 
 drop table if exists pro_produto cascade;
 create table pro_produto (
-  pro_id bigint generated always as identity,
+  pro_id bigint AUTO_INCREMENT,
   pro_descricao varchar(100) not null,
   pro_data_hora_anuncio timestamp not null,
   pro_data_hora_lancamento timestamp,
@@ -36,7 +39,7 @@ create table pro_produto (
 
 drop table if exists des_desejo cascade;
 create table des_desejo (
-  des_id bigint generated always as identity,
+  des_id bigint AUTO_INCREMENT,
   des_lembrete varchar(100),
   des_data_hora_inclusao timestamp not null,
   des_nivel_interesse int not null,
@@ -48,7 +51,7 @@ create table des_desejo (
 
 drop table if exists cot_cotacao cascade;
 create table cot_cotacao (
-  cot_id bigint generated always as identity,
+  cot_id bigint AUTO_INCREMENT,
   cot_data_hora timestamp not null,
   cot_valor float not null,
   cot_comentario varchar(100),
@@ -60,7 +63,7 @@ create table cot_cotacao (
 
 drop table if exists ant_anotacao cascade;
 create table ant_anotacao (
-  ant_id bigint generated always as identity,
+  ant_id bigint AUTO_INCREMENT,
   ant_texto varchar(256) not null,
   ant_data_hora timestamp not null,
   ant_usr_id bigint not null,
@@ -71,7 +74,7 @@ create table ant_anotacao (
 
 drop table if exists tra_trabalho cascade;
 create table tra_trabalho (
-  tra_id bigint generated always as identity,
+  tra_id bigint AUTO_INCREMENT,
   tra_titulo varchar(100) not null unique,
   tra_data_hora_entrega timestamp not null,
   tra_descricao varchar(200),
@@ -84,7 +87,7 @@ create table tra_trabalho (
 
 drop table if exists rev_revisao cascade;
 create table rev_revisao (
-  rev_id bigint generated always as identity,
+  rev_id bigint AUTO_INCREMENT,
   rev_comentario varchar(100) not null,
   rev_data_hora timestamp not null,
   rev_gravidade int,
@@ -96,7 +99,7 @@ create table rev_revisao (
 
 drop table if exists con_conteudo cascade;
 create table con_conteudo (
-  con_id bigint generated always as identity,
+  con_id bigint AUTO_INCREMENT,
   con_texto varchar(200) not null,
   con_data_hora_criacao timestamp not null,
   con_data_hora_publicacao timestamp,
@@ -136,7 +139,6 @@ insert into con_conteudo (con_texto, con_data_hora_criacao, con_data_hora_public
          ('Meu trabalho inteiro é isso!', '2025-06-01 17:02', null, 2);
 
 --Comente essa linha se o usuario ja existir
-create user spring with password 'pass123';
-
---Permite que o usuario spring possa acessar o banco de dados
-grant update, delete, insert, select on all tables in schema public to spring;
+CREATE USER 'spring'@'localhost' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON springbootdb.* TO 'spring'@'localhost';
+FLUSH PRIVILEGES;
